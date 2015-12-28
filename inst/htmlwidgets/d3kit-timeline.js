@@ -24,8 +24,34 @@ HTMLWidgets.widget({
         // instantiate d3kit-timeline using options
         chart = new d3Kit.Timeline(el, x.options);
         
+        // work to specify axis
+        if(typeof(x.axes) !== "undefined"){
+          Object.keys(x.axes[0]).map(function(axkey,i){
+            if(this[axkey] !== null && chart.axis[axkey]){
+              chart.axis[axkey](this[axkey])
+            }
+          },
+          x.axes[0])
+        }
+        
         // supply data in array of objects form
         chart.data(HTMLWidgets.dataframeToD3(x.data));
+        
+        // set up a container for tasks to perform after completion
+        //  one example would be add callbacks for event handling
+        //  styling
+        if (!(typeof x.tasks === "undefined") ){
+          if ( (typeof x.tasks.length === "undefined") ||
+           (typeof x.tasks === "function" ) ) {
+             // handle a function not enclosed in array
+             // should be able to remove once using jsonlite
+             x.tasks = [x.tasks];
+          }
+          x.tasks.map(function(t){
+            // for each tasks call the task with el supplied as `this`
+            t.call({el:el,chart:chart});
+          });
+        }
       },
 
       resize: function(width, height) {

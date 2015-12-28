@@ -36,7 +36,7 @@ add_axis <- function(
   if(is.null(chart)){
     stop("please provide a chart, so we can add an axis", call. = FALSE)
   }
-  if(!inherits(chart,"timeline")) {
+  if(!inherits(chart,c("timeline","d3kit-timeline"))) {
     stop("expecting a timeline plot, so we can properly add an axis" , call. = FALSE)
   }
   
