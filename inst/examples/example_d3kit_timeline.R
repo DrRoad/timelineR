@@ -31,9 +31,9 @@ d3kit_timeline(
   direction = "right",
   timeFn = htmlwidgets::JS(
 "
-  function(d){
-    return new Date(d.time);
-  }
+function(d){
+  return new Date(d.time);
+}
 "
   ),
   textFn = htmlwidgets::JS(
@@ -55,18 +55,18 @@ add_axis(
     labelBgColor = '#777',
     linkColor = '#777',
     timeFn = htmlwidgets::JS(
-      "
-    function(d){
-      return new Date(d.time);
-    }
-  "
+"
+function(d){
+  return new Date(d.time);
+}
+"
     ),
     textFn = htmlwidgets::JS(
-      "
-  function(d){
-      return new Date(d.time).getFullYear() + ' - ' + d.name;
-  }
-  "
+"
+function(d){
+  return new Date(d.time).getFullYear() + ' - ' + d.name;
+}
+"
     ),
     margin = list(left=20, right=20, top=20, bottom=20),
     width = 400,
@@ -76,27 +76,98 @@ add_axis(
   tickSize = 0
 )
 
+library(dplyr)
+library(scales)
 
 d3kit_timeline(
-  starwars_data,
+  starwars_data %>%
+    mutate( color = col_factor( palette = "Set1", domain = NULL)(.$name)),
   direction = "down",
   layerGap = 40,
   labella = list(maxPos = 800),
   timeFn = htmlwidgets::JS(
-    "
-  function(d){
-    return new Date(d.time);
-  }
 "
-  ),
-  textFn = htmlwidgets::JS(
-    "
 function(d){
-    return d.name;
+  return new Date(d.time);
 }
 "
   ),
+  textFn = htmlwidgets::JS(
+"
+function(d){
+  return d.name;
+}
+"
+  ),
+  dotColor = htmlwidgets::JS(
+"
+function(d){
+  return d.color;
+}
+"
+  ),
+  labelBgColor = htmlwidgets::JS(
+"
+function(d){
+  return d.color;
+}
+"
+  ),
+  linkColor = htmlwidgets::JS(
+  "
+function(d){
+  return d.color;
+}
+  "
+  ),
   margin = list(left=20, right=20, top=30, bottom=20),
+  width = 804,
+  height = 160
+)
+
+
+d3kit_timeline(
+  starwars_data %>%
+    mutate( color = col_factor( palette = "Set2", domain = NULL)(ceiling(.$episode/3)) ),
+  direction = "up",
+  layerGap = 40,
+  labella = list(maxPos = 800, algorithm = "simple"),
+  timeFn = htmlwidgets::JS(
+"
+function(d){
+  return new Date(d.time);
+}
+"
+  ),
+  textFn = htmlwidgets::JS(
+"
+function(d){
+  return d.name;
+}
+"
+  ),
+  dotColor = htmlwidgets::JS(
+"
+function(d){
+  return d.color;
+}
+"
+  ),
+  labelBgColor = htmlwidgets::JS(
+"
+function(d){
+  return d.color;
+}
+"
+  ),
+  linkColor = htmlwidgets::JS(
+"
+function(d){
+  return d.color;
+}
+"
+  ),
+  margin = list(left=20, right=20, top=20, bottom=30),
   width = 804,
   height = 160
 )
