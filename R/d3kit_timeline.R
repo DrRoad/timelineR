@@ -37,7 +37,7 @@
 #' @param textYOffset valid \code{CSS} size for the vertical offset for text within each label
 #' @param ... any additional arguments provided in \code{...} will be considered as
 #'              \code{options} provided to \code{d3kit-timeline}
-#' @param width, height any valid \code{CSS} size unit for the height and width
+#' @param width,height any valid \code{CSS} size unit for the height and width
 #'              of the \code{div} container
 #' @param elementId 
 #'
@@ -68,6 +68,62 @@ d3kit_timeline <- function(
   width = NULL, height = NULL,
   elementId = NULL
 ) {
+  
+  # this is not a thing of beauty;  happily taking suggestions
+  # Argument Handler for \link{d3kit_timeline}
+  #
+  # Resolve the various types of arguments for \code{keyFn}, \code{timeFn}, and \code{textFn}
+  #  for \code{d3kit_timeline}.
+  #  
+  # fn either a \code{character} of a column name in \code{data},
+  #              an R \link[stats]{formula}, such as \code{~text}, or a
+  #              \link[htmlwidget]{JS} function
+  # returns htmlwidget::JS
+  
+  resolve_fn_arg <- function(fn){
+    # adapted from https://github.com/jcheng5/d3scatter/blob/master/R/d3scatter.R
+    varname <- NULL
+    
+    if(inherits(fn,"formula")){
+      varname <- fn[[2]]
+    }
+    
+    if(inherits(varname,"name")) {
+      varname <- deparse(varname)
+    }
+    
+    if(inherits(varname,"call")) {
+      data <<- data.frame(
+        data,
+        eval(varname, data, environment(varname)),
+        check.names = FALSE,
+        stringsAsFactors = FALSE
+      )
+      colnames(data)[ncol(data)] <<- deparse(varname)
+      varname <- deparse(varname)
+    }
+    
+    if(inherits(fn,"JS_EVAL")) {
+      return(fn)
+    }
+    
+    if(inherits(fn,"character")) {
+      varname <- fn
+    }
+    
+    if(inherits(varname,"character")) {
+      htmlwidgets::JS(sprintf("function(d){return d['%s']}",varname))
+    }
+  }
+  
+  Map(
+    function(fnarg){
+      if(!is.null(get(fnarg))){
+        assign(fnarg,resolve_fn_arg(get(fnarg)),inherits=TRUE)
+      }
+    }, 
+    c("keyFn", "timeFn", "textFn")
+  )  
 
   # forward options using x
   x = list(
@@ -95,7 +151,7 @@ d3kit_timeline <- function(
       )
     )
   )
-
+  
   # create widget
   htmlwidgets::createWidget(
     name = 'd3kit-timeline',

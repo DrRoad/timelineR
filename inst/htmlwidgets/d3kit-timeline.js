@@ -21,6 +21,17 @@ HTMLWidgets.widget({
         x.options.initialWidth = width;
         x.options.initialHeight = height;
         
+        // try to convert time variable into JavaScript date
+        if(typeof(x.options.timeFn) === "undefined") {
+          x.options.timeFn = function(d){
+            return new Date(d.time)
+          };
+        } else {
+          // thanks http://stackoverflow.com/questions/1833588/javascript-clone-a-function
+          var originaltimeFn = x.options.timeFn.bind({});
+          x.options.timeFn = function(d){ return new Date(originaltimeFn(d)) };
+        }
+        
         // instantiate d3kit-timeline using options
         chart = new d3Kit.Timeline(el, x.options);
         

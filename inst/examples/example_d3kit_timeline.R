@@ -29,13 +29,6 @@ starwars_data <- data.frame(
 d3kit_timeline(
   starwars_data,
   direction = "right",
-  timeFn = htmlwidgets::JS(
-"
-function(d){
-  return new Date(d.time);
-}
-"
-  ),
   textFn = htmlwidgets::JS(
 "
 function(d){
@@ -47,6 +40,39 @@ function(d){
   height = 250
 )
 
+d3kit_timeline(
+  starwars_data,
+  direction = "right",
+  # not necessary; tries to force convert to JavaScript Date
+  timeFn = htmlwidgets::JS(
+"
+function(d){
+  return new Date(d.time);
+}
+"
+  ),
+  textFn = "name",
+  width = 400,
+  height = 250
+)
+
+d3kit_timeline(
+  starwars_data,
+  direction = "right",
+  textFn = ~name,
+  width = 400,
+  height = 250
+)
+
+# more advanced formula for textFn
+d3kit_timeline(
+  starwars_data,
+  direction = "right",
+  textFn = ~paste0(name,"- Episode ",episode),
+  width = 400,
+  height = 250
+)
+
 
 add_axis(
   d3kit_timeline(
@@ -54,13 +80,6 @@ add_axis(
     direction = "left",
     labelBgColor = '#777',
     linkColor = '#777',
-    timeFn = htmlwidgets::JS(
-"
-function(d){
-  return new Date(d.time);
-}
-"
-    ),
     textFn = htmlwidgets::JS(
 "
 function(d){
@@ -85,13 +104,6 @@ d3kit_timeline(
   direction = "down",
   layerGap = 40,
   labella = list(maxPos = 800),
-  timeFn = htmlwidgets::JS(
-"
-function(d){
-  return new Date(d.time);
-}
-"
-  ),
   textFn = htmlwidgets::JS(
 "
 function(d){
@@ -132,13 +144,6 @@ d3kit_timeline(
   direction = "up",
   layerGap = 40,
   labella = list(maxPos = 800, algorithm = "simple"),
-  timeFn = htmlwidgets::JS(
-"
-function(d){
-  return new Date(d.time);
-}
-"
-  ),
   textFn = htmlwidgets::JS(
 "
 function(d){

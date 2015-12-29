@@ -59,7 +59,7 @@ to add around the text within each label}
 \item{...}{any additional arguments provided in \code{...} will be considered as
 \code{options} provided to \code{d3kit-timeline}}
 
-\item{width, }{height any valid \code{CSS} size unit for the height and width
+\item{width, height}{any valid \code{CSS} size unit for the height and width
 of the \code{div} container}
 
 \item{elementId}{}
@@ -118,6 +118,36 @@ function(d){
 }
 "
   ),
+  width = 400,
+  height = 250
+)
+
+d3kit_timeline(
+  starwars_data,
+  direction = "right",
+  timeFn = htmlwidgets::JS(
+"
+function(d){
+  return new Date(d.time);
+}
+"
+  ),
+  textFn = "name",
+  width = 400,
+  height = 250
+)
+
+d3kit_timeline(
+  starwars_data,
+  direction = "right",
+  timeFn = htmlwidgets::JS(
+    "
+    function(d){
+    return new Date(d.time);
+    }
+    "
+  ),
+  textFn = ~paste0(name,"- Episode ",episode),
   width = 400,
   height = 250
 )
