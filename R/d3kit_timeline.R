@@ -1,7 +1,46 @@
-#' <Add Title>
+#' Simple `d3.js` Timeline Plots
 #'
-#' <Add Description>
+#' Produce `d3.js` timelines along a single axis with very good labelling using
+#'   \href{https://github.com/kristw/d3kit-timeline}{d3kit-timeline}
+#'   and \href{https://github.com/twitter/labella.js}{labella.js}.  Since
+#'   \code{d3kit_timeline} is an \code{htmlwidget}, it should work seamlessly in 
+#'   nearly all R contexts, such as console, \code{rmarkdown}, \code{Shiny}, and the
+#'   browser.
 #' 
+#' @param data any table like structure, such as \code{data.frame}, \code{xts}, or \code{matrix}
+#' @param margin \code{list} to specify the margin.  The default is
+#'              \code{list(left = 40, right = 20, top = 20, bottom = 20)}.
+#' @param initialWidth,initialHeight although this is provided to be consistent with the API, please use
+#'              \code{height} and \code{width} instead
+#' @param direction \code{character} for the location of the labels relative to the axis
+#' @param keyFn either a \code{character} of a column name in \code{data},
+#'              an R \link[stats]{formula}, such as \code{~key}, or a
+#'              \link[htmlwidget]{JS} function specifying the identifier for each data point.
+#' @param timeFn either a \code{character} of a column name in \code{data},
+#'              an R \link[stats]{formula}, such as \code{~time}, or a
+#'              \link[htmlwidget]{JS} function specifying the time of each data point.
+#' @param textFn either a \code{character} of a column name in \code{data},
+#'              an R \link[stats]{formula}, such as \code{~text}, or a
+#'              \link[htmlwidget]{JS} function specifying the text label for each data point.
+#' @param labella \code{list} of options for Labella.js.  See \href{https://github.com/twitter/labella.js/blob/master/docs/Force.md\#constructor}{Labella.js docs}.
+#' @param layerGap \code{integer} distance from the axis to the first layer of labels
+#'              and between each layer of labels (in situations where all labels
+#'              cannot fit within one layer)
+#' @param dotRadius \code{integer} in \code{px} or a \link[htmlwidget]{JS} function
+#'              for the radius of the dots
+#' @param dotColor color in hex format or a \link[htmlwidget]{JS} function for the color of the dot
+#' @param labelBgColor color in hex format or a \link[htmlwidget]{JS} function for the background of the label
+#' @param labelTextColor color in hex format or a \link[htmlwidget]{JS} function for the text of the label
+#' @param linkColor color in hex format or a \link[htmlwidget]{JS} function for the color of the link between the dots and label
+#' @param labelPadding \code{list} in the format \code{list(left=,right=,top=,bottom=)} for the space
+#'              to add around the text within each label
+#' @param textYOffset valid \code{CSS} size for the vertical offset for text within each label
+#' @param ... any additional arguments provided in \code{...} will be considered as
+#'              \code{options} provided to \code{d3kit-timeline}
+#' @param width, height any valid \code{CSS} size unit for the height and width
+#'              of the \code{div} container
+#' @param elementId 
+#'
 #' @example ./inst/examples/example_d3kit_timeline.R
 #'
 #' @import htmlwidgets

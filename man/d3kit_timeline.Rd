@@ -2,7 +2,7 @@
 % Please edit documentation in R/d3kit_timeline.R
 \name{d3kit_timeline}
 \alias{d3kit_timeline}
-\title{<Add Title>}
+\title{Simple `d3.js` Timeline Plots}
 \usage{
 d3kit_timeline(data = NULL, margin = NULL, initialWidth = NULL,
   initialHeight = NULL, direction = NULL, keyFn = NULL, timeFn = NULL,
@@ -11,8 +11,66 @@ d3kit_timeline(data = NULL, margin = NULL, initialWidth = NULL,
   linkColor = NULL, labelPadding = NULL, textYOffset = NULL, ...,
   width = NULL, height = NULL, elementId = NULL)
 }
+\arguments{
+\item{data}{any table like structure, such as \code{data.frame}, \code{xts}, or \code{matrix}}
+
+\item{margin}{\code{list} to specify the margin.  The default is
+\code{list(left = 40, right = 20, top = 20, bottom = 20)}.}
+
+\item{initialWidth, initialHeight}{although this is provided to be consistent with the API, please use
+\code{height} and \code{width} instead}
+
+\item{direction}{\code{character} for the location of the labels relative to the axis}
+
+\item{keyFn}{either a \code{character} of a column name in \code{data},
+an R \link[stats]{formula}, such as \code{~key}, or a
+\link[htmlwidget]{JS} function specifying the identifier for each data point.}
+
+\item{timeFn}{either a \code{character} of a column name in \code{data},
+an R \link[stats]{formula}, such as \code{~time}, or a
+\link[htmlwidget]{JS} function specifying the time of each data point.}
+
+\item{textFn}{either a \code{character} of a column name in \code{data},
+an R \link[stats]{formula}, such as \code{~text}, or a
+\link[htmlwidget]{JS} function specifying the text label for each data point.}
+
+\item{labella}{\code{list} of options for Labella.js.  See \href{https://github.com/twitter/labella.js/blob/master/docs/Force.md\#constructor}{Labella.js docs}.}
+
+\item{layerGap}{\code{integer} distance from the axis to the first layer of labels
+and between each layer of labels (in situations where all labels
+cannot fit within one layer)}
+
+\item{dotRadius}{\code{integer} in \code{px} or a \link[htmlwidget]{JS} function
+for the radius of the dots}
+
+\item{dotColor}{color in hex format or a \link[htmlwidget]{JS} function for the color of the dot}
+
+\item{labelBgColor}{color in hex format or a \link[htmlwidget]{JS} function for the background of the label}
+
+\item{labelTextColor}{color in hex format or a \link[htmlwidget]{JS} function for the text of the label}
+
+\item{linkColor}{color in hex format or a \link[htmlwidget]{JS} function for the color of the link between the dots and label}
+
+\item{labelPadding}{\code{list} in the format \code{list(left=,right=,top=,bottom=)} for the space
+to add around the text within each label}
+
+\item{textYOffset}{valid \code{CSS} size for the vertical offset for text within each label}
+
+\item{...}{any additional arguments provided in \code{...} will be considered as
+\code{options} provided to \code{d3kit-timeline}}
+
+\item{width, }{height any valid \code{CSS} size unit for the height and width
+of the \code{div} container}
+
+\item{elementId}{}
+}
 \description{
-<Add Description>
+Produce `d3.js` timelines along a single axis with very good labelling using
+  \href{https://github.com/kristw/d3kit-timeline}{d3kit-timeline}
+  and \href{https://github.com/twitter/labella.js}{labella.js}.  Since
+  \code{d3kit_timeline} is an \code{htmlwidget}, it should work seamlessly in 
+  nearly all R contexts, such as console, \code{rmarkdown}, \code{Shiny}, and the
+  browser.
 }
 \examples{
 # devtools::install_github("timelyportfolio/timelineR")
