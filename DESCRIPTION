@@ -1,6 +1,7 @@
 Package: timelineR
 Title: Interactive Timelines
-Version: 0.0.1
+Version: 0.0.2
+Date: 2015-12-30
 Authors@R: c(
       person(
         "Mike", "Bostock"
@@ -13,6 +14,21 @@ Authors@R: c(
         , comment = "d3.layout.timeline plugin in htmlwidgets/lib, https://github.com/emeeks/d3.layout.timeline"
       ),
       person(
+        "Twitter", "Inc"
+        , role = c("aut", "cph")
+        , comment = "d3kit library in htmlwidgets/lib, https://github.com/twitter/d3kit"
+      ),
+      person(
+        "Twitter", "Inc",
+        , role = c("aut", "cph")
+        , comment = "labella.js library in htmlwidgets/lib, https://github.com/twitter/labella.js"
+      ),      
+      person(
+        "Krist", "Wongsuphasawat",
+        , role = c("aut", "cph")
+        , comment = "d3kit-timeline library in htmlwidgets/lib, https://github.com/kristw/d3kit-timeline"
+      ),
+      person(
         "Kent", "Russell"
         , role = c("aut", "cre")
         , comment = "R interface"
@@ -20,17 +36,18 @@ Authors@R: c(
       )
     )
 Maintainer: Kenton Russell <kent.russell@timelyportfolio.com>
-Description: Create interactive d3.js timelines from R
-             using \href{https://github.com/emeeks/d3.layout.timeline}{d3.layout.timeline}.
+Description: Create interactive d3.js timelines from R using \href{https://
+    github.com/emeeks/d3.layout.timeline}{d3.layout.timeline}.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/timelyportfolio/timelineR
 BugReports: https://github.com/timelyportfolio/timelineR/issues
-Imports: 
+Imports:
     htmlwidgets
-Suggests: 
+Suggests:
     testthat,
     knitr,
     pipeR,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 4.1.1.9001

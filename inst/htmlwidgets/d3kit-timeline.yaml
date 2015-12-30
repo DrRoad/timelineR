@@ -1,0 +1,18 @@
+dependencies:
+  - name: d3
+    version: 3.5.6
+    src: htmlwidgets/lib/d3
+    script: d3.min.js
+  - name: d3kit
+    version: 1.0.9
+    src: htmlwidgets/lib/d3kit/dist
+    script: d3kit.min.js
+  - name: labella
+    version: 0.1.1
+    src: htmlwidgets/lib/labella/dist
+    script: labella.min.js
+  - name: d3kit-timeline
+    version: 0.1.0
+    src: htmlwidgets/lib/d3kit-timeline/dist
+    script: d3kit-timeline.min.js
+    stylesheet: d3kit-timeline.css

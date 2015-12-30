@@ -5,19 +5,20 @@
 #' we can add it to our timeline htmlwidget.
 #' 
 #' @param chart timeline plot htmlwidget to which you would like to add an axis
-#' @param scale 
-#' @param orient 
-#' @param ticks 
-#' @param tickValues 
-#' @param tickSize 
-#' @param innerTickSize 
-#' @param outerTickSize 
-#' @param tickPadding
-#' @param styles 
+#' @param scale scale
+#' @param orient orient
+#' @param ticks ticks
+#' @param tickValues tickValues
+#' @param tickSize tickSize
+#' @param innerTickSize innerTickSize
+#' @param outerTickSize outerTickSize
+#' @param tickPadding tickPadding
+#' @param styles styles
 #'
 #' @return timeline chart modified with an added axis
+#' 
 #' @export
-#'
+
 add_axis <- function(
   chart = NULL,
   scale = NULL,
@@ -35,7 +36,7 @@ add_axis <- function(
   if(is.null(chart)){
     stop("please provide a chart, so we can add an axis", call. = FALSE)
   }
-  if(!inherits(chart,"timeline")) {
+  if(!inherits(chart,c("timeline","d3kit-timeline"))) {
     stop("expecting a timeline plot, so we can properly add an axis" , call. = FALSE)
   }
   
