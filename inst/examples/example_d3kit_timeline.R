@@ -137,6 +137,7 @@ function(d){
   height = 160
 )
 
+colorJS <- htmlwidgets::JS("function(d){ return d.color; }")
 
 d3kit_timeline(
   starwars_data %>%
@@ -144,35 +145,34 @@ d3kit_timeline(
   direction = "up",
   layerGap = 40,
   labella = list(maxPos = 800, algorithm = "simple"),
-  textFn = htmlwidgets::JS(
-"
-function(d){
-  return d.name;
-}
-"
-  ),
-  dotColor = htmlwidgets::JS(
-"
-function(d){
-  return d.color;
-}
-"
-  ),
-  labelBgColor = htmlwidgets::JS(
-"
-function(d){
-  return d.color;
-}
-"
-  ),
-  linkColor = htmlwidgets::JS(
-"
-function(d){
-  return d.color;
-}
-"
-  ),
+  textFn = ~name,
+  dotColor = colorJS,
+  labelBgColor = colorJS,
+  linkColor = colorJS,
   margin = list(left=20, right=20, top=20, bottom=30),
   width = 804,
   height = 160
 )
+
+
+\dontrun{
+  # demonstrate use with xts
+  library(xts)
+  library(timelineR)
+  
+  xts_data <- xts(
+    paste0("random pt ",1:12),
+    order.by = seq.Date(
+      as.Date("2015-01-01"),
+      by = "months",
+      length.out=12
+    ) + floor(runif(12,0,28))
+  )
+  colnames(xts_data) <- "label"
+  
+  d3kit_timeline(
+    xts_data,
+    textFn = ~label,
+    margin = list(right = 20, left = 100, bottom = 20, top = 20)
+  )
+}

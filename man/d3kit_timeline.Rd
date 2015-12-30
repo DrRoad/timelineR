@@ -28,7 +28,10 @@ an R \link[stats]{formula}, such as \code{~key}, or a
 
 \item{timeFn}{either a \code{character} of a column name in \code{data},
 an R \link[stats]{formula}, such as \code{~time}, or a
-\link[htmlwidget]{JS} function specifying the time of each data point.}
+\link[htmlwidget]{JS} function specifying the time of each data point.
+If \code{data} is a \link{xts} object, then \code{data} will be
+automatically converted and \code{timeFn} will be assumed to be
+\code{index(data)} unless specified.}
 
 \item{textFn}{either a \code{character} of a column name in \code{data},
 an R \link[stats]{formula}, such as \code{~text}, or a
@@ -104,13 +107,6 @@ starwars_data <- data.frame(
 d3kit_timeline(
   starwars_data,
   direction = "right",
-  timeFn = htmlwidgets::JS(
-"
-function(d){
-  return new Date(d.time);
-}
-"
-  ),
   textFn = htmlwidgets::JS(
 "
 function(d){
@@ -125,6 +121,7 @@ function(d){
 d3kit_timeline(
   starwars_data,
   direction = "right",
+  # not necessary; tries to force convert to JavaScript Date
   timeFn = htmlwidgets::JS(
 "
 function(d){
@@ -140,13 +137,15 @@ function(d){
 d3kit_timeline(
   starwars_data,
   direction = "right",
-  timeFn = htmlwidgets::JS(
-    "
-    function(d){
-    return new Date(d.time);
-    }
-    "
-  ),
+  textFn = ~name,
+  width = 400,
+  height = 250
+)
+
+# more advanced formula for textFn
+d3kit_timeline(
+  starwars_data,
+  direction = "right",
   textFn = ~paste0(name,"- Episode ",episode),
   width = 400,
   height = 250
@@ -159,13 +158,6 @@ add_axis(
     direction = "left",
     labelBgColor = '#777',
     linkColor = '#777',
-    timeFn = htmlwidgets::JS(
-"
-function(d){
-  return new Date(d.time);
-}
-"
-    ),
     textFn = htmlwidgets::JS(
 "
 function(d){
@@ -190,13 +182,6 @@ d3kit_timeline(
   direction = "down",
   layerGap = 40,
   labella = list(maxPos = 800),
-  timeFn = htmlwidgets::JS(
-"
-function(d){
-  return new Date(d.time);
-}
-"
-  ),
   textFn = htmlwidgets::JS(
 "
 function(d){
@@ -230,6 +215,7 @@ function(d){
   height = 160
 )
 
+colorJS <- htmlwidgets::JS("function(d){ return d.color; }")
 
 d3kit_timeline(
   starwars_data \%>\%
@@ -237,44 +223,36 @@ d3kit_timeline(
   direction = "up",
   layerGap = 40,
   labella = list(maxPos = 800, algorithm = "simple"),
-  timeFn = htmlwidgets::JS(
-"
-function(d){
-  return new Date(d.time);
-}
-"
-  ),
-  textFn = htmlwidgets::JS(
-"
-function(d){
-  return d.name;
-}
-"
-  ),
-  dotColor = htmlwidgets::JS(
-"
-function(d){
-  return d.color;
-}
-"
-  ),
-  labelBgColor = htmlwidgets::JS(
-"
-function(d){
-  return d.color;
-}
-"
-  ),
-  linkColor = htmlwidgets::JS(
-"
-function(d){
-  return d.color;
-}
-"
-  ),
+  textFn = ~name,
+  dotColor = colorJS,
+  labelBgColor = colorJS,
+  linkColor = colorJS,
   margin = list(left=20, right=20, top=20, bottom=30),
   width = 804,
   height = 160
 )
+
+
+\dontrun{
+  # demonstrate use with xts
+  library(xts)
+  library(timelineR)
+  
+  xts_data <- xts(
+    paste0("random pt ",1:12),
+    order.by = seq.Date(
+      as.Date("2015-01-01"),
+      by = "months",
+      length.out=12
+    ) + floor(runif(12,0,28))
+  )
+  colnames(xts_data) <- "label"
+  
+  d3kit_timeline(
+    xts_data,
+    textFn = ~label,
+    margin = list(right = 20, left = 100, bottom = 20, top = 20)
+  )
+}
 }
 

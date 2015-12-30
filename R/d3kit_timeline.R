@@ -19,6 +19,9 @@
 #' @param timeFn either a \code{character} of a column name in \code{data},
 #'              an R \link[stats]{formula}, such as \code{~time}, or a
 #'              \link[htmlwidget]{JS} function specifying the time of each data point.
+#'              If \code{data} is a \link{xts} object, then \code{data} will be
+#'              automatically converted and \code{timeFn} will be assumed to be
+#'              \code{index(data)} unless specified.
 #' @param textFn either a \code{character} of a column name in \code{data},
 #'              an R \link[stats]{formula}, such as \code{~text}, or a
 #'              \link[htmlwidget]{JS} function specifying the text label for each data point.
@@ -68,6 +71,18 @@ d3kit_timeline <- function(
   width = NULL, height = NULL,
   elementId = NULL
 ) {
+  
+  # if data is xts then attempt to convert to data.frame
+  #   with a column named time for index(data)
+  if(inherits(data,"xts")){
+    data <- data.frame(
+      "time" = index(data),
+      data,
+      check.names = TRUE,
+      stringsAsFactors = FALSE
+    )
+  }
+  
   
   # this is not a thing of beauty;  happily taking suggestions
   # Argument Handler for \link{d3kit_timeline}
