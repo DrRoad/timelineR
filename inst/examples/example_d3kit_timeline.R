@@ -149,6 +149,8 @@ d3kit_timeline(
   d3kit_timeline(
     xts_data,
     textFn = ~label,
+    labelBgColor = "#FFF",
+    labelTextColor = "#AAA",
     margin = list(right = 20, left = 100, bottom = 20, top = 20)
   )
 }
