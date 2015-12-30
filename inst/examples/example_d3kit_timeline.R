@@ -98,46 +98,22 @@ function(d){
 library(dplyr)
 library(scales)
 
+colorJS <- htmlwidgets::JS("function(d){ return d.color; }")
+
 d3kit_timeline(
   starwars_data %>%
     mutate( color = col_factor( palette = "Set1", domain = NULL)(.$name)),
   direction = "down",
   layerGap = 40,
   labella = list(maxPos = 800),
-  textFn = htmlwidgets::JS(
-"
-function(d){
-  return d.name;
-}
-"
-  ),
-  dotColor = htmlwidgets::JS(
-"
-function(d){
-  return d.color;
-}
-"
-  ),
-  labelBgColor = htmlwidgets::JS(
-"
-function(d){
-  return d.color;
-}
-"
-  ),
-  linkColor = htmlwidgets::JS(
-  "
-function(d){
-  return d.color;
-}
-  "
-  ),
+  textFn = ~name,
+  dotColor = colorJS,
+  labelBgColor = colorJS,
+  linkColor = colorJS,
   margin = list(left=20, right=20, top=30, bottom=20),
   width = 804,
   height = 160
 )
-
-colorJS <- htmlwidgets::JS("function(d){ return d.color; }")
 
 d3kit_timeline(
   starwars_data %>%
