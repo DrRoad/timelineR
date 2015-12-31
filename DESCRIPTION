@@ -43,7 +43,7 @@ LazyData: true
 URL: https://github.com/timelyportfolio/timelineR
 BugReports: https://github.com/timelyportfolio/timelineR/issues
 Imports:
-    htmlwidgets
+    htmlwidgets (>= 0.5.2)
 Suggests:
     testthat,
     knitr,

@@ -14,5 +14,5 @@ dependencies:
   - name: d3kit-timeline
     version: 0.1.0
     src: htmlwidgets/lib/d3kit-timeline/dist
-    script: d3kit-timeline.min.js
+    script: d3kit-timeline.js
     stylesheet: d3kit-timeline.css
