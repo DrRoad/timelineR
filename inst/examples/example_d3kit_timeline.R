@@ -154,3 +154,14 @@ d3kit_timeline(
     margin = list(right = 20, left = 100, bottom = 20, top = 20)
   )
 }
+
+# non-d3.time.scale scale; thanks @pssguy
+# new working improved with custom domain
+d3kit_timeline(
+  data.frame(time = 1:3),
+  textFn = ~time,
+  margin = list(left=100,right=20,bottom=20,top=20),
+  scale = htmlwidgets::JS("d3.scale.linear()"),
+  domain = c(0,3)
+)
+
