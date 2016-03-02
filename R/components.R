@@ -41,7 +41,7 @@ add_axis <- function(
   }
   
   # if chart does not have axes yet then we need to start with an empty list
-  if(!is.null(chart$x$axes)) chart$x$axes = list()
+  if(is.null(chart$x$axes)) chart$x$axes = list()
   
   chart$x$axes[[length(chart$x$axes) + 1]] <- list(
     scale = scale,
