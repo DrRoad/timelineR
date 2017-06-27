@@ -1,6 +1,6 @@
 Package: timelineR
 Title: Interactive Timelines
-Version: 0.0.2
+Version: 0.5.0
 Date: 2015-12-30
 Authors@R: c(
       person(
